@@ -36,13 +36,15 @@
  ********************************************************************************/
 package net.sourceforge.cruisecontrol.sampleproject.connectfour;
 
-import junit.framework.TestCase;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-public class CellTest extends TestCase {
+public class CellTest {
 
-    public void testConstructor() {
+    @Test
+	public void testConstructor() {
         Cell newCell = new Cell(10, 5);
-        assertEquals(10, newCell.getColumn());
-        assertEquals(5, newCell.getRow());
+        Assert.assertEquals(10, newCell.getColumn());
+        Assert.assertEquals(5, newCell.getRow());
     }
 }
