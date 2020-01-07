@@ -3,14 +3,12 @@
  */
 package net.sourceforge.cruisecontrol.sampleproject.connectfour.selenium;
 
-import static org.junit.Assert.*;
-
-import org.junit.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.testng.Assert;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
 /**
  * @author sreenivasrao.m
@@ -37,7 +35,7 @@ public class DemoSelenium {
 
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+		Assert.fail("Not yet implemented");
 	}
 
 }

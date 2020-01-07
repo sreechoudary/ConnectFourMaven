@@ -36,93 +36,98 @@
  ********************************************************************************/
 package net.sourceforge.cruisecontrol.sampleproject.connectfour;
 
-import junit.framework.TestCase;
+import org.testng.Assert;
+import org.testng.annotations.Test;
 
-public class PlayingStandTest extends TestCase {
+public class PlayingStandTest {
 
-    public void testFourConnected() throws GameOverException {
+    @Test
+	public void testFourConnected() throws GameOverException {
         PlayingStand stand = new PlayingStand();
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
-        assertTrue(stand.areFourConnected());
+        Assert.assertTrue(stand.areFourConnected());
 
         try {
             stand.dropBlack(6);
-            fail("Game is over, should be an exception");
+            Assert.fail("Game is over, should be an exception");
         } catch (GameOverException expected) {
         }
     }
 
-    public void testFourConnectedHorizontally() throws GameOverException {
+    @Test
+	public void testFourConnectedHorizontally() throws GameOverException {
         PlayingStand stand = new PlayingStand();
         createRedWinsHorizontally(stand);
-        assertTrue(stand.areFourConnected());
+        Assert.assertTrue(stand.areFourConnected());
 
         try {
             stand.dropBlack(6);
-            fail("Game is over, should be an exception");
+            Assert.fail("Game is over, should be an exception");
         } catch (GameOverException expected) {
         }
     }
 
     private void createRedWinsHorizontally(PlayingStand stand) {
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(1);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(2);
         stand.dropBlack(6);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(3);
     }
 
-    public void testFourConnectedDiagonally() throws GameOverException {
+    @Test
+	public void testFourConnectedDiagonally() throws GameOverException {
         PlayingStand stand = new PlayingStand();
         createRedWinsDiagonallyUpward(stand);
-        assertTrue(stand.areFourConnected());
+        Assert.assertTrue(stand.areFourConnected());
 
         try {
             stand.dropBlack(6);
-            fail("Game is over, should be an exception");
+            Assert.fail("Game is over, should be an exception");
         } catch (GameOverException expected) {
         }
 
-        assertEquals(Chip.RED, stand.getWinner());
+        Assert.assertEquals(Chip.RED, stand.getWinner());
     }
 
-    public void testStandControlsTurns() throws GameOverException {
+    @Test
+	public void testStandControlsTurns() throws GameOverException {
         PlayingStand stand = new PlayingStand();
         stand.dropRed(1);
         try {
             stand.dropRed(1);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (OutOfTurnException expected) {
         }
 
         stand.dropBlack(1);
         try {
             stand.dropBlack(1);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (OutOfTurnException expected) {
         }
 
@@ -130,7 +135,8 @@ public class PlayingStandTest extends TestCase {
         stand.dropBlack(2);
     }
 
-    public void testFullColumn() {
+    @Test
+	public void testFullColumn() {
         PlayingStand stand = new PlayingStand();
         stand.dropRed(0);
         stand.dropBlack(0);
@@ -141,68 +147,70 @@ public class PlayingStandTest extends TestCase {
 
         try {
             stand.dropRed(0);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (FullColumnException expected) {
         }
     }
 
-    public void testNonExistentColumn() {
+    @Test
+	public void testNonExistentColumn() {
         PlayingStand stand = new PlayingStand();
         try {
             stand.dropRed(-1);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropBlack(-1);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropRed(7);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropRed(8);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropRed(10000);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropRed(Integer.MAX_VALUE);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
 
         try {
             stand.dropRed(Integer.MIN_VALUE);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (InvalidColumnException expected) {
         }
     }
 
-    public void testNoWinner() {
+    @Test
+	public void testNoWinner() {
         PlayingStand stand = new PlayingStand();
 
         fillWholeStandWithoutWinner(stand);
 
-        assertFalse(stand.areFourConnected());
-        assertTrue(stand.isGameOver());
-        assertNull(stand.getWinner());
+        Assert.assertFalse(stand.areFourConnected());
+        Assert.assertTrue(stand.isGameOver());
+        Assert.assertNull(stand.getWinner());
 
         try {
             stand.dropRed(0);
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (GameOverException expected) {
         }
     }
@@ -217,6 +225,7 @@ public class PlayingStandTest extends TestCase {
      * --------------
      * 0 1 2 3 4 5 6
      */
+	@Test
     public void testDownwardDiagonalWins() {
         PlayingStand stand = new PlayingStand();
         stand.dropRed(3);
@@ -231,63 +240,65 @@ public class PlayingStandTest extends TestCase {
         stand.dropBlack(0);
         stand.dropRed(0);
 
-        assertTrue(stand.areFourConnected());
-        assertTrue(stand.isGameOver());
+        Assert.assertTrue(stand.areFourConnected());
+        Assert.assertTrue(stand.isGameOver());
     }
 
-    public void testWinningPlacement() {
+    @Test
+	public void testWinningPlacement() {
         PlayingStand stand = new PlayingStand();
         createRedWinsDiagonallyUpward(stand);
 
         PlayingStand.WinningPlacement placement = stand.getWinningPlacement();
-        assertNotNull(placement);
+        Assert.assertNotNull(placement);
 
         Cell startCell = placement.getStartingCell();
-        assertEquals(0, startCell.getColumn());
-        assertEquals(0, startCell.getRow());
-        assertEquals(Direction.UPWARD_DIAGONAL, placement.getDirection());
+        Assert.assertEquals(0, startCell.getColumn());
+        Assert.assertEquals(0, startCell.getRow());
+        Assert.assertEquals(Direction.UPWARD_DIAGONAL, placement.getDirection());
 
         stand = new PlayingStand();
         createRedWinsHorizontally(stand);
 
         placement = stand.getWinningPlacement();
-        assertEquals(0, placement.getStartingCell().getColumn());
-        assertEquals(0, placement.getStartingCell().getRow());
-        assertEquals(Direction.HORIZONTAL, placement.getDirection());
+        Assert.assertEquals(0, placement.getStartingCell().getColumn());
+        Assert.assertEquals(0, placement.getStartingCell().getRow());
+        Assert.assertEquals(Direction.HORIZONTAL, placement.getDirection());
     }
 
-    public void testNoWinningPlacementBeforeGameOver() {
+    @Test
+	public void testNoWinningPlacementBeforeGameOver() {
         PlayingStand stand = new PlayingStand();
 
         try {
             stand.getWinningPlacement();
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (GameNotOverException expected) {
         }
 
         fillWholeStandWithoutWinner(stand);
         try {
             stand.getWinningPlacement();
-            fail("Expected an exception");
+            Assert.fail("Expected an exception");
         } catch (StalemateException expected) {
         }
     }
 
     private void createRedWinsDiagonallyUpward(PlayingStand stand) {
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(0);
         stand.dropBlack(1);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(1);
         stand.dropBlack(2);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropRed(2);
         stand.dropBlack(3);
         stand.dropRed(2);
-        assertFalse(stand.areFourConnected());
+        Assert.assertFalse(stand.areFourConnected());
 
         stand.dropBlack(5);
         stand.dropRed(3);
